@@ -4,9 +4,11 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import NotificationsProvider from './hooks/useNotifications/NotificationsProvider';
 import DialogsProvider from './hooks/useDialogs/DialogsProvider';
+import AppTheme from './shared-theme/AppTheme';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+<AppTheme>
     <BrowserRouter>
       <NotificationsProvider>
         <DialogsProvider>
@@ -14,5 +16,6 @@ createRoot(document.getElementById('root')).render(
         </DialogsProvider>
       </NotificationsProvider>
     </BrowserRouter>
+    </AppTheme>
   </StrictMode>
 );

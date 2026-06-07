@@ -1,16 +1,21 @@
-import * as React from 'react';
-import { useNavigate } from 'react-router';
-import useNotifications from '../hooks/useNotifications/useNotifications';
+import * as React from "react";
+import { useNavigate } from "react-router";
+import useNotifications from "../hooks/useNotifications/useNotifications";
 import {
   createOne as createSpec,
   validate as validateSpec,
-} from '../data/specs';
-import SpecForm from './SpecForm';
-import PageContainer from './PageContainer';
+} from "../data/specs";
+import SpecForm from "./SpecForm";
+import PageContainer from "./PageContainer";
 
 const INITIAL_FORM_VALUES = {
-  role: 'Market',
-  isFullTime: true,
+  code: "",
+  desc: "",
+  supplier: "",
+  category: "",
+  image: "",
+  comment: "",
+  revisedOn: null,
 };
 
 export default function SpecCreate() {
@@ -65,7 +70,9 @@ export default function SpecCreate() {
     const { issues } = validateSpec(formValues);
     if (issues && issues.length > 0) {
       setFormErrors(
-        Object.fromEntries(issues.map((issue) => [issue.path?.[0], issue.message])),
+        Object.fromEntries(
+          issues.map((issue) => [issue.path?.[0], issue.message]),
+        ),
       );
       return;
     }
@@ -73,17 +80,17 @@ export default function SpecCreate() {
 
     try {
       await createSpec(formValues);
-      notifications.show('Spec created successfully.', {
-        severity: 'success',
+      notifications.show("Spec created successfully.", {
+        severity: "success",
         autoHideDuration: 3000,
       });
 
-      navigate('/Specs');
+      navigate("/specs");
     } catch (createError) {
       notifications.show(
         `Failed to create Spec. Reason: ${createError.message}`,
         {
-          severity: 'error',
+          severity: "error",
           autoHideDuration: 3000,
         },
       );
@@ -94,7 +101,7 @@ export default function SpecCreate() {
   return (
     <PageContainer
       title="New Spec"
-      breadcrumbs={[{ title: 'Specs', path: '/Specs' }, { title: 'New' }]}
+      breadcrumbs={[{ title: "Specs", path: "/Specs" }, { title: "New" }]}
     >
       <SpecForm
         formState={formState}

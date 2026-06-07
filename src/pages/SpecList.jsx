@@ -1,23 +1,21 @@
-import * as React from 'react';
-import Alert from '@mui/material/Alert';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import Stack from '@mui/material/Stack';
-import Tooltip from '@mui/material/Tooltip';
-import { DataGrid, GridActionsCellItem, gridClasses } from '@mui/x-data-grid';
-import AddIcon from '@mui/icons-material/Add';
-import RefreshIcon from '@mui/icons-material/Refresh';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useLocation, useNavigate, useSearchParams } from 'react-router';
-import { useDialogs } from '../hooks/useDialogs/useDialogs';
-import useNotifications from '../hooks/useNotifications/useNotifications';
-import {
-  deleteOne as deleteSpec,
-  getMany as getSpecs,
-} from '../data/specs';
-import PageContainer from './PageContainer';
+import * as React from "react";
+import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
+import Tooltip from "@mui/material/Tooltip";
+import { DataGrid, GridActionsCellItem, gridClasses } from "@mui/x-data-grid";
+import AddIcon from "@mui/icons-material/Add";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useLocation, useNavigate, useSearchParams } from "react-router";
+import { useDialogs } from "../hooks/useDialogs/useDialogs";
+import useNotifications from "../hooks/useNotifications/useNotifications";
+import { deleteOne as deleteSpec, getMany as getSpecs, createOne } from "../data/specs";
+import PageContainer from "../components/PageContainer";
+import SpecSearch from "../components/SpecSearch"
 
 const INITIAL_PAGE_SIZE = 10;
 
@@ -30,18 +28,18 @@ export default function SpecList() {
   const notifications = useNotifications();
 
   const [paginationModel, setPaginationModel] = React.useState({
-    page: searchParams.get('page') ? Number(searchParams.get('page')) : 0,
-    pageSize: searchParams.get('pageSize')
-      ? Number(searchParams.get('pageSize'))
+    page: searchParams.get("page") ? Number(searchParams.get("page")) : 0,
+    pageSize: searchParams.get("pageSize")
+      ? Number(searchParams.get("pageSize"))
       : INITIAL_PAGE_SIZE,
   });
   const [filterModel, setFilterModel] = React.useState(
-    searchParams.get('filter')
-      ? JSON.parse(searchParams.get('filter') ?? '')
+    searchParams.get("filter")
+      ? JSON.parse(searchParams.get("filter") ?? "")
       : { items: [] },
   );
   const [sortModel, setSortModel] = React.useState(
-    searchParams.get('sort') ? JSON.parse(searchParams.get('sort') ?? '') : [],
+    searchParams.get("sort") ? JSON.parse(searchParams.get("sort") ?? "") : [],
   );
 
   const [rowsState, setRowsState] = React.useState({
@@ -56,13 +54,13 @@ export default function SpecList() {
     (model) => {
       setPaginationModel(model);
 
-      searchParams.set('page', String(model.page));
-      searchParams.set('pageSize', String(model.pageSize));
+      searchParams.set("page", String(model.page));
+      searchParams.set("pageSize", String(model.pageSize));
 
       const newSearchParamsString = searchParams.toString();
 
       navigate(
-        `${pathname}${newSearchParamsString ? '?' : ''}${newSearchParamsString}`,
+        `${pathname}${newSearchParamsString ? "?" : ""}${newSearchParamsString}`,
       );
     },
     [navigate, pathname, searchParams],
@@ -76,15 +74,15 @@ export default function SpecList() {
         model.items.length > 0 ||
         (model.quickFilterValues && model.quickFilterValues.length > 0)
       ) {
-        searchParams.set('filter', JSON.stringify(model));
+        searchParams.set("filter", JSON.stringify(model));
       } else {
-        searchParams.delete('filter');
+        searchParams.delete("filter");
       }
 
       const newSearchParamsString = searchParams.toString();
 
       navigate(
-        `${pathname}${newSearchParamsString ? '?' : ''}${newSearchParamsString}`,
+        `${pathname}${newSearchParamsString ? "?" : ""}${newSearchParamsString}`,
       );
     },
     [navigate, pathname, searchParams],
@@ -95,15 +93,15 @@ export default function SpecList() {
       setSortModel(model);
 
       if (model.length > 0) {
-        searchParams.set('sort', JSON.stringify(model));
+        searchParams.set("sort", JSON.stringify(model));
       } else {
-        searchParams.delete('sort');
+        searchParams.delete("sort");
       }
 
       const newSearchParamsString = searchParams.toString();
 
       navigate(
-        `${pathname}${newSearchParamsString ? '?' : ''}${newSearchParamsString}`,
+        `${pathname}${newSearchParamsString ? "?" : ""}${newSearchParamsString}`,
       );
     },
     [navigate, pathname, searchParams],
@@ -149,7 +147,7 @@ export default function SpecList() {
   );
 
   const handleCreateClick = React.useCallback(() => {
-    navigate('/Specs/new');
+    navigate("/Specs/new");
   }, [navigate]);
 
   const handleRowEdit = React.useCallback(
@@ -165,9 +163,9 @@ export default function SpecList() {
         `Do you wish to delete ${Spec.code}?`,
         {
           title: `Delete Spec?`,
-          severity: 'error',
-          okText: 'Delete',
-          cancelText: 'Cancel',
+          severity: "error",
+          okText: "Delete",
+          cancelText: "Cancel",
         },
       );
 
@@ -176,8 +174,8 @@ export default function SpecList() {
         try {
           await deleteSpec(Number(Spec.id));
 
-          notifications.show('Spec deleted successfully.', {
-            severity: 'success',
+          notifications.show("Spec deleted successfully.", {
+            severity: "success",
             autoHideDuration: 3000,
           });
           loadData();
@@ -185,7 +183,7 @@ export default function SpecList() {
           notifications.show(
             `Failed to delete Spec. Reason:' ${deleteError.message}`,
             {
-              severity: 'error',
+              severity: "error",
               autoHideDuration: 3000,
             },
           );
@@ -199,35 +197,95 @@ export default function SpecList() {
   const initialState = React.useMemo(
     () => ({
       pagination: { paginationModel: { pageSize: INITIAL_PAGE_SIZE } },
+          columns: {
+      columnVisibilityModel: { id: false },
+          }
     }),
     [],
   );
 
   const columns = React.useMemo(
     () => [
-      { field: 'id', headerName: 'ID', width: 70 },
-      { field: 'code', headerName: 'Code', width: 100 },
-      { field: 'age', headerName: 'Age', type: 'number' },
+      { field: "id", headerName: "ID", width: 70 },
       {
-        field: 'joinDate',
-        headerName: 'Join date',
-        type: 'date',
+        field: "code",
+        headerName: "Code",
+        width: 70,
+        renderCell: ({ value }) => (
+          <div style={{ whiteSpace: "pre-line", padding: "8px 0" }}>
+            {value}
+          </div>
+        ),
+      },
+      {
+        field: "desc",
+        headerName: "Description",
+        width: 150,
+        renderCell: ({ value }) => (
+          <div style={{ whiteSpace: "pre-line", padding: "8px 0" }}>
+            {value}
+          </div>
+        ),
+      },
+      {
+        field: "supplier",
+        headerName: "Supplier",
+        width: 150,
+        renderCell: ({ value }) => (
+          <div style={{ whiteSpace: "pre-line", padding: "8px 0" }}>
+            {value}
+          </div>
+        ),
+      },
+      {
+        field: "category",
+        headerName: "Category",
+        type: "singleSelect",
+        valueOptions: [
+          "Chair",
+          "Table",
+          "Workstation",
+          "Lounge",
+          "Storage",
+          "Mirror",
+        ],
+        width: 160,
+      },
+      {
+        field: "image",
+        headerName: "Image",
+        width: 150,
+        renderCell: ({ value }) =>
+          value ? (
+            <img
+              src={value}
+              alt="spec"
+              style={{ width: 150, height: 150, objectFit: "contain" }}
+            />
+          ) : null,
+      },
+            {
+        field: "comment",
+        headerName: "Comment",
+        width: 150,
+        renderCell: ({ value }) => (
+          <div style={{ whiteSpace: "pre-line", padding: "8px 0" }}>
+            {value}
+          </div>
+        ),
+      },
+      {
+        field: "revisedOn",
+        headerName: "Revised On",
+        type: "date",
         valueGetter: (value) => value && new Date(value),
         width: 140,
       },
       {
-        field: 'role',
-        headerName: 'Department',
-        type: 'singleSelect',
-        valueOptions: ['Market', 'Finance', 'Development'],
-        width: 160,
-      },
-      { field: 'isFullTime', headerName: 'Full-time', type: 'boolean' },
-      {
-        field: 'actions',
-        type: 'actions',
+        field: "actions",
+        type: "actions",
         flex: 1,
-        align: 'right',
+        align: "right",
         getActions: ({ row }) => [
           <GridActionsCellItem
             key="edit-item"
@@ -247,17 +305,21 @@ export default function SpecList() {
     [handleRowEdit, handleRowDelete],
   );
 
-  const pageTitle = 'Specs';
+  const pageTitle = "Furniture Schedule";
 
   return (
     <PageContainer
       title={pageTitle}
-      breadcrumbs={[{ title: pageTitle }]}
       actions={
-        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+        <Stack direction="row" spacing={1} sx={{ alignItems: "center", width: '100%' }}>
+          <SpecSearch onAdd={(spec) => {createOne(spec).then(() => loadData());}} sx={{ flexGrow: 1 }}></SpecSearch>
           <Tooltip title="Reload data" placement="right" enterDelay={1000}>
             <div>
-              <IconButton size="small" aria-label="refresh" onClick={handleRefresh}>
+              <IconButton
+                size="small"
+                aria-label="refresh"
+                onClick={handleRefresh}
+              >
                 <RefreshIcon />
               </IconButton>
             </div>
@@ -272,7 +334,7 @@ export default function SpecList() {
         </Stack>
       }
     >
-      <Box sx={{ flex: 1, width: '100%' }}>
+      <Box sx={{ flex: 1, width: "100%" }}>
         {error ? (
           <Box sx={{ flexGrow: 1 }}>
             <Alert severity="error">{error.message}</Alert>
@@ -280,6 +342,7 @@ export default function SpecList() {
         ) : (
           <DataGrid
             rows={rowsState.rows}
+            getRowHeight={() => "auto"}
             rowCount={rowsState.rowCount}
             columns={columns}
             pagination
@@ -300,23 +363,24 @@ export default function SpecList() {
             pageSizeOptions={[5, INITIAL_PAGE_SIZE, 25]}
             sx={{
               [`& .${gridClasses.columnHeader}, & .${gridClasses.cell}`]: {
-                outline: 'transparent',
+                outline: "transparent",
               },
               [`& .${gridClasses.columnHeader}:focus-within, & .${gridClasses.cell}:focus-within`]:
                 {
-                  outline: 'none',
+                  outline: "none",
                 },
-              [`& .${gridClasses.row}:hover`]: {
-                cursor: 'pointer',
+              [`& .${gridClasses.cell}`]: {
+                whiteSpace: "normal",
+                wordWrap: "break-word",
               },
             }}
             slotProps={{
               loadingOverlay: {
-                variant: 'circular-progress',
-                noRowsVariant: 'circular-progress',
+                variant: "circular-progress",
+                noRowsVariant: "circular-progress",
               },
               baseIconButton: {
-                size: 'small',
+                size: "small",
               },
             }}
           />

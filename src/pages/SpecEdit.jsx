@@ -10,8 +10,8 @@ import {
   updateOne as updateSpec,
   validate as validateSpec,
 } from '../data/specs';
-import SpecForm from './SpecForm';
-import PageContainer from './PageContainer';
+import SpecForm from '../components/SpecForm';
+import PageContainer from '../components/PageContainer';
 
 function SpecEditForm({ initialValues, onSubmit }) {
   const { SpecId } = useParams();

@@ -1,25 +1,22 @@
-import * as React from 'react';
-import Alert from '@mui/material/Alert';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
-import Divider from '@mui/material/Divider';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useNavigate, useParams } from 'react-router';
-import dayjs from 'dayjs';
-import { useDialogs } from '../hooks/useDialogs/useDialogs';
-import useNotifications from '../hooks/useNotifications/useNotifications';
-import {
-  deleteOne as deleteSpec,
-  getOne as getSpec,
-} from '../data/specs';
-import PageContainer from './PageContainer';
+import * as React from "react";
+import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useNavigate, useParams } from "react-router";
+import dayjs from "dayjs";
+import { useDialogs } from "../hooks/useDialogs/useDialogs";
+import useNotifications from "../hooks/useNotifications/useNotifications";
+import { deleteOne as deleteSpec, getOne as getSpec } from "../data/specs";
+import PageContainer from "../components/PageContainer";
 
 export default function SpecShow() {
   const { SpecId } = useParams();
@@ -63,9 +60,9 @@ export default function SpecShow() {
       `Do you wish to delete ${Spec.code}?`,
       {
         title: `Delete Spec?`,
-        severity: 'error',
-        okText: 'Delete',
-        cancelText: 'Cancel',
+        severity: "error",
+        okText: "Delete",
+        cancelText: "Cancel",
       },
     );
 
@@ -74,17 +71,17 @@ export default function SpecShow() {
       try {
         await deleteSpec(Number(SpecId));
 
-        navigate('/Specs');
+        navigate("/Specs");
 
-        notifications.show('Spec deleted successfully.', {
-          severity: 'success',
+        notifications.show("Spec deleted successfully.", {
+          severity: "success",
           autoHideDuration: 3000,
         });
       } catch (deleteError) {
         notifications.show(
           `Failed to delete Spec. Reason:' ${deleteError.message}`,
           {
-            severity: 'error',
+            severity: "error",
             autoHideDuration: 3000,
           },
         );
@@ -94,7 +91,7 @@ export default function SpecShow() {
   }, [Spec, dialogs, SpecId, navigate, notifications]);
 
   const handleBack = React.useCallback(() => {
-    navigate('/Specs');
+    navigate("/Specs");
   }, [navigate]);
 
   const renderShow = React.useMemo(() => {
@@ -103,11 +100,11 @@ export default function SpecShow() {
         <Box
           sx={{
             flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
             m: 1,
           }}
         >
@@ -124,8 +121,8 @@ export default function SpecShow() {
     }
 
     return Spec ? (
-      <Box sx={{ flexGrow: 1, width: '100%' }}>
-        <Grid container spacing={2} sx={{ width: '100%' }}>
+      <Box sx={{ flexGrow: 1, width: "100%" }}>
+        <Grid container spacing={2} sx={{ width: "100%" }}>
           <Grid size={{ xs: 12, sm: 6 }}>
             <Paper sx={{ px: 2, py: 1 }}>
               <Typography variant="overline">Code</Typography>
@@ -136,39 +133,61 @@ export default function SpecShow() {
           </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>
             <Paper sx={{ px: 2, py: 1 }}>
-              <Typography variant="overline">Age</Typography>
+              <Typography variant="overline">Description</Typography>
               <Typography variant="body1" sx={{ mb: 1 }}>
-                {Spec.age}
+                {Spec.desc}
               </Typography>
             </Paper>
           </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>
             <Paper sx={{ px: 2, py: 1 }}>
-              <Typography variant="overline">Join date</Typography>
+              <Typography variant="overline">Supplier</Typography>
               <Typography variant="body1" sx={{ mb: 1 }}>
-                {dayjs(Spec.joinDate).format('MMMM D, YYYY')}
+                {Spec.supplier}
               </Typography>
             </Paper>
           </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>
             <Paper sx={{ px: 2, py: 1 }}>
-              <Typography variant="overline">Department</Typography>
+              <Typography variant="overline">Category</Typography>
               <Typography variant="body1" sx={{ mb: 1 }}>
-                {Spec.role}
+                {Spec.category}
+              </Typography>
+            </Paper>
+          </Grid>
+                    <Grid size={{ xs: 12, sm: 6 }}>
+            <Paper sx={{ px: 2, py: 1 }}>
+              <Typography variant="overline">Image</Typography>
+              <Typography variant="body1" sx={{ mb: 1 }}>
+                {Spec.image && (
+    <img src={Spec.image} alt="Spec preview" style={{ width: '100%', maxHeight: 300, objectFit: 'contain' }} />
+  )}
+              </Typography>
+            </Paper>
+          </Grid>
+                    <Grid size={{ xs: 12, sm: 6 }}>
+            <Paper sx={{ px: 2, py: 1 }}>
+              <Typography variant="overline">Comment </Typography>
+              <Typography variant="body1" sx={{ mb: 1 }}>
+                {Spec.comment}
               </Typography>
             </Paper>
           </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>
             <Paper sx={{ px: 2, py: 1 }}>
-              <Typography variant="overline">Full-time</Typography>
+              <Typography variant="overline">Revised on</Typography>
               <Typography variant="body1" sx={{ mb: 1 }}>
-                {Spec.isFullTime ? 'Yes' : 'No'}
+                {dayjs(Spec.revisedOn).format("MMMM D, YYYY")}
               </Typography>
             </Paper>
           </Grid>
         </Grid>
         <Divider sx={{ my: 3 }} />
-        <Stack direction="row" spacing={2} sx={{ justifyContent: 'space-between' }}>
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{ justifyContent: "space-between" }}
+        >
           <Button
             variant="contained"
             startIcon={<ArrowBackIcon />}
@@ -196,26 +215,16 @@ export default function SpecShow() {
         </Stack>
       </Box>
     ) : null;
-  }, [
-    isLoading,
-    error,
-    Spec,
-    handleBack,
-    handleSpecEdit,
-    handleSpecDelete,
-  ]);
+  }, [isLoading, error, Spec, handleBack, handleSpecEdit, handleSpecDelete]);
 
   const pageTitle = `Spec ${SpecId}`;
 
   return (
     <PageContainer
       title={pageTitle}
-      breadcrumbs={[
-        { title: 'Specs', path: '/Specs' },
-        { title: pageTitle },
-      ]}
+      breadcrumbs={[{ title: "Specs", path: "/Specs" }, { title: pageTitle }]}
     >
-      <Box sx={{ display: 'flex', flex: 1, width: '100%' }}>{renderShow}</Box>
+      <Box sx={{ display: "flex", flex: 1, width: "100%" }}>{renderShow}</Box>
     </PageContainer>
   );
 }

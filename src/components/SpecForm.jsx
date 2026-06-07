@@ -119,6 +119,9 @@ function SpecForm(props) {
               label="Code *"
               error={!!formErrors.code}
               helperText={formErrors.code ?? " "}
+              multiline
+              minRows={1}
+              maxRows={10}
               fullWidth
             />
           </Grid>
@@ -130,39 +133,13 @@ function SpecForm(props) {
               label="Description *"
               error={!!formErrors.desc}
               helperText={formErrors.desc ?? " "}
+              multiline
+              minRows={4}
+              maxRows={15}
               fullWidth
             />
           </Grid>
-          <Grid size={{ xs: 12, sm: 6 }} sx={{ display: "flex" }}>
-            <TextField
-              value={formValues.supplier ?? ""}
-              onChange={handleTextFieldChange}
-              name="supplier"
-              label="Supplier Details *"
-              error={!!formErrors.supplier}
-              helperText={formErrors.supplier ?? " "}
-              fullWidth
-            />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6 }} sx={{ display: "flex" }}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                value={
-                  formValues.revisedOn ? dayjs(formValues.revisedOn) : null
-                }
-                onChange={handleDateFieldChange("revisedOn")}
-                name="revisedOn"
-                label="Revised On"
-                slotProps={{
-                  textField: {
-                    error: !!formErrors.revisedOn,
-                    helperText: formErrors.revisedOn ?? " ",
-                    fullWidth: true,
-                  },
-                }}
-              />
-            </LocalizationProvider>
-          </Grid>
+
           <Grid size={{ xs: 12, sm: 6 }} sx={{ display: "flex" }}>
             <FormControl error={!!formErrors.category} fullWidth>
               <InputLabel id="Spec-category-label">Category</InputLabel>
@@ -185,6 +162,75 @@ function SpecForm(props) {
               <FormHelperText>{formErrors.category ?? " "}</FormHelperText>
             </FormControl>
           </Grid>
+          <Grid size={{ xs: 12, sm: 6 }} sx={{ display: "flex" }}>
+            <TextField
+              value={formValues.supplier ?? ""}
+              onChange={handleTextFieldChange}
+              name="supplier"
+              label="Supplier Details *"
+              error={!!formErrors.supplier}
+              helperText={formErrors.supplier ?? " "}
+              multiline
+              minRows={4}
+              maxRows={15}
+              fullWidth
+            />
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6 }} sx={{ display: "flex" }}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                value={
+                  formValues.revisedOn ? dayjs(formValues.revisedOn) : null
+                }
+                onChange={handleDateFieldChange("revisedOn")}
+                name="revisedOn"
+                label="Revised On"
+                slotProps={{
+                  textField: {
+                    error: !!formErrors.revisedOn,
+                    helperText: formErrors.revisedOn ?? " ",
+                    fullWidth: true,
+                  },
+                }}
+              />
+            </LocalizationProvider>
+          </Grid>
+                    <Grid size={{ xs: 12, sm: 6 }} sx={{ display: "flex" }}>
+            <TextField
+              value={formValues.comment ?? ""}
+              onChange={handleTextFieldChange}
+              name="comment"
+              label="Comments"
+              error={!!formErrors.comment}
+              helperText={formErrors.comment ?? " "}
+              multiline
+              minRows={4}
+              maxRows={15}
+              fullWidth
+            />
+          </Grid>
+          <Grid
+            size={{ xs: 12, sm: 6 }}
+            sx={{ display: "flex", flexDirection: "column", gap: 1 }}
+          >
+            <TextField
+              value={formValues.image ?? ""}
+              onChange={handleTextFieldChange}
+              name="image"
+              label="Image URL"
+              error={!!formErrors.image}
+              helperText={formErrors.image ?? " "}
+              fullWidth
+            />
+            {formValues.image && (
+              <img
+                src={formValues.image}
+                alt="Spec preview"
+                style={{ width: "100%", maxHeight: 300, objectFit: "contain" }}
+              />
+            )}
+          </Grid>
+
         </Grid>
       </FormGroup>
       <Stack
@@ -226,7 +272,14 @@ SpecForm.propTypes = {
       code: PropTypes.string,
       desc: PropTypes.string,
       supplier: PropTypes.string,
-      category: PropTypes.oneOf(['Chair', 'Table', 'Workstation', 'Lounge', 'Storage', 'Mirror']),
+      category: PropTypes.oneOf([
+        "Chair",
+        "Table",
+        "Workstation",
+        "Lounge",
+        "Storage",
+        "Mirror",
+      ]),
     }).isRequired,
   }).isRequired,
   onFieldChange: PropTypes.func.isRequired,
