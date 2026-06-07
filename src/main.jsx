@@ -1,13 +1,18 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
-import './index.css'
-import App from './App.jsx'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App';
+import NotificationsProvider from './hooks/useNotifications/NotificationsProvider';
+import DialogsProvider from './hooks/useDialogs/DialogsProvider';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <NotificationsProvider>
+        <DialogsProvider>
+          <App />
+        </DialogsProvider>
+      </NotificationsProvider>
     </BrowserRouter>
-  </StrictMode>,
-)
+  </StrictMode>
+);
