@@ -36,7 +36,7 @@ export default function NavBar() {
     <Box sx={{ flexGrow: 1 }}>
       <FormGroup></FormGroup>
       <AppBar position="static">
-        <Container>
+        
           <Toolbar>
             <Typography variant="h6" component="a" href="/" sx={{ flexGrow: 1, textDecoration: "none", color: "inherit" }} >
               SCHEDULR
@@ -92,7 +92,6 @@ export default function NavBar() {
               </div>
             )}
           </Toolbar>
-        </Container>
       </AppBar>
       <SideBar open={sideBarOpen} onClose={() => setSideBarOpen(false)} />
     </Box>

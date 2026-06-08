@@ -14,6 +14,7 @@ export default function ProjectCard() {
         alt="Project 1 Image"
         height="140"
         image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdqNyTySgrNMyqTNuPuzgg1mJy9Z4NwC-raQ&s"
+        sx={{mb: 2}}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">

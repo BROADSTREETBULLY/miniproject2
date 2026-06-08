@@ -16,7 +16,7 @@ const DemoPaper = styled(Paper)(({ theme }) => ({
 function HomePage() {
   return (
     <>
-      <Container sx={{ mt: 2 }}>
+    <Container maxWidth={false} sx={{ flex: 1, display: 'flex', flexDirection: 'column', mt: 2 }}>
         <Stack direction="row" spacing={2} margin={2}>
           <DemoPaper square={false}>
             <h3>

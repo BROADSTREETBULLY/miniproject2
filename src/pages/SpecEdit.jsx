@@ -96,7 +96,7 @@ function SpecEditForm({ initialValues, onSubmit }) {
       onSubmit={handleFormSubmit}
       onReset={handleFormReset}
       submitButtonLabel="Save"
-      backButtonPath={`/dashboard/specs/${SpecId}`}
+      backButtonPath={`/dashboard/specs/`}
     />
   );
 }
@@ -181,7 +181,6 @@ export default function SpecEdit() {
       title={`Edit Spec ${SpecId}`}
       breadcrumbs={[
         { title: 'Specs', path: 'specs' },
-        { title: `Spec ${SpecId}`, path: `specs/${SpecId}` },
         { title: 'Edit' },
       ]}
     >

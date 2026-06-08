@@ -6,6 +6,7 @@ export function getSpecsStore() {
   // updated to empty array so that list doesn't autopopulate
 }
 
+
 export function searchLibrary(query) {
   if (!query) return [];
   return SPEC_LIBRARY.filter((spec) =>
@@ -86,10 +87,78 @@ export async function getMany({ paginationModel, filterModel, sortModel }) {
   };
 }
 
+export async function getAll({ paginationModel, filterModel, sortModel }) {
+  const SpecsStore = getSpecsStore();
+  const allSpecs = [...SPEC_LIBRARY, ...SpecsStore];
+  let filteredSpecs = [...allSpecs];
+
+  // Apply filters (example only)
+  if (filterModel?.items?.length) {
+    filterModel.items.forEach(({ field, value, operator }) => {
+      if (!field || value == null) {
+        return;
+      }
+
+      filteredSpecs = filteredSpecs.filter((Spec) => {
+        const SpecValue = Spec[field];
+
+        switch (operator) {
+          case "contains":
+            return String(SpecValue)
+              .toLowerCase()
+              .includes(String(value).toLowerCase());
+          case "equals":
+            return SpecValue === value;
+          case "startsWith":
+            return String(SpecValue)
+              .toLowerCase()
+              .startsWith(String(value).toLowerCase());
+          case "endsWith":
+            return String(SpecValue)
+              .toLowerCase()
+              .endsWith(String(value).toLowerCase());
+          case ">":
+            return SpecValue > value;
+          case "<":
+            return SpecValue < value;
+          default:
+            return true;
+        }
+      });
+    });
+  }
+
+  // Apply sorting
+  if (sortModel?.length) {
+    filteredSpecs.sort((a, b) => {
+      for (const { field, sort } of sortModel) {
+        if (a[field] < b[field]) {
+          return sort === "asc" ? -1 : 1;
+        }
+        if (a[field] > b[field]) {
+          return sort === "asc" ? 1 : -1;
+        }
+      }
+      return 0;
+    });
+  }
+
+  // Apply pagination
+  const start = paginationModel.page * paginationModel.pageSize;
+  const end = start + paginationModel.pageSize;
+  const paginatedSpecs = filteredSpecs.slice(start, end);
+
+  return {
+    items: paginatedSpecs,
+    itemCount: filteredSpecs.length,
+  };
+}
+
 export async function getOne(SpecId) {
   const SpecsStore = getSpecsStore();
 
-  const SpecToShow = SpecsStore.find((Spec) => Spec.id === SpecId);
+  const SpecToShow = SpecsStore.find((Spec) => Spec.id === SpecId) 
+    ?? SPEC_LIBRARY.find((Spec) => Spec.id === SpecId);
 
   if (!SpecToShow) {
     throw new Error("Spec not found");

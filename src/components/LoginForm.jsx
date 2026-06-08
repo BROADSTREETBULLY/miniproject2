@@ -23,7 +23,7 @@ function LoginForm() {
           label="Required"
           defaultValue=""
         /> <br /><br />
-        <Button variant="contained" href="/about">
+        <Button variant="contained" href="/dashboard">
           Login
         </Button> <br /><br />
      </Card>

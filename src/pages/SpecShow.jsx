@@ -91,7 +91,7 @@ export default function SpecShow() {
   }, [Spec, dialogs, SpecId, navigate, notifications]);
 
   const handleBack = React.useCallback(() => {
-    navigate("/dashboard/specs");
+    navigate("/dashboard/library");
   }, [navigate]);
 
   const renderShow = React.useMemo(() => {

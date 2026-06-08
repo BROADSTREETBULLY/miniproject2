@@ -141,7 +141,7 @@ export default function SpecList() {
 
   const handleRowClick = React.useCallback(
     ({ row }) => {
-      navigate(`/dashboard/specs/${row.id}`);
+      navigate(`/dashboard/specs/${row.id}/edit`);
     },
     [navigate],
   );
@@ -198,7 +198,7 @@ export default function SpecList() {
     () => ({
       pagination: { paginationModel: { pageSize: INITIAL_PAGE_SIZE } },
           columns: {
-      columnVisibilityModel: { id: false },
+      columnVisibilityModel: { id: false, category: false},
           }
     }),
     [],
@@ -220,7 +220,17 @@ export default function SpecList() {
       {
         field: "desc",
         headerName: "Description",
-        width: 150,
+        width: 110,
+        renderCell: ({ value }) => (
+          <div style={{ whiteSpace: "pre-line", padding: "8px 0" }}>
+            {value}
+          </div>
+        ),
+      },
+            {
+        field: "spec",
+        headerName: "Specification",
+        width: 450,
         renderCell: ({ value }) => (
           <div style={{ whiteSpace: "pre-line", padding: "8px 0" }}>
             {value}
@@ -230,7 +240,7 @@ export default function SpecList() {
       {
         field: "supplier",
         headerName: "Supplier",
-        width: 150,
+        width: 250,
         renderCell: ({ value }) => (
           <div style={{ whiteSpace: "pre-line", padding: "8px 0" }}>
             {value}
@@ -249,7 +259,7 @@ export default function SpecList() {
           "Storage",
           "Mirror",
         ],
-        width: 160,
+        width: 100,
       },
       {
         field: "image",
@@ -267,7 +277,17 @@ export default function SpecList() {
             {
         field: "comment",
         headerName: "Comment",
-        width: 150,
+        width: 200,
+        renderCell: ({ value }) => (
+          <div style={{ whiteSpace: "pre-line", padding: "8px 0" }}>
+            {value}
+          </div>
+        ),
+      },
+            {
+        field: "rev",
+        headerName: "REV",
+        width: 70,
         renderCell: ({ value }) => (
           <div style={{ whiteSpace: "pre-line", padding: "8px 0" }}>
             {value}
@@ -276,11 +296,12 @@ export default function SpecList() {
       },
       {
         field: "revisedOn",
-        headerName: "Revised On",
+        headerName: "Date",
         type: "date",
         valueGetter: (value) => value && new Date(value),
-        width: 140,
+        width: 70,
       },
+      
       {
         field: "actions",
         type: "actions",

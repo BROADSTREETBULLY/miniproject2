@@ -19,7 +19,7 @@ const DemoPaper = styled(Paper)(({ theme }) => ({
 function Dashboard() {
   return (
     <>
-      <Container sx={{ mt: 2 }}>
+          <Container maxWidth={false} sx={{ flex: 1, display: 'flex', flexDirection: 'column', mt: 2 }}>
         <DemoPaper square={false} sx={{ mt: 2 }}>
           <Stack
             direction="row"
@@ -37,7 +37,7 @@ function Dashboard() {
           </Stack>
         </DemoPaper>
       </Container>
-      <Container sx={{ mt: 2 }}>
+          <Container maxWidth={false} sx={{ flex: 1, display: 'flex', flexDirection: 'column', mt: 2 }}>
         <DemoPaper square={false} sx={{ mt: 2 }}>
           <Stack
             direction="row"
@@ -47,11 +47,11 @@ function Dashboard() {
           </Stack>
         </DemoPaper>
       </Container>
-      <Container sx={{ mt: 2 }}>
+         <Container maxWidth={false} sx={{ flex: 1, display: 'flex', flexDirection: 'column', mt: 2 }}>
         <DemoPaper square={false} sx={{ mt: 2 }}>
           <Stack direction="column">
               <h2>Recent Projects</h2>
-            <Container sx={{ mt: 2 }}>
+               <Container maxWidth={false} sx={{ flex: 1, display: 'flex', flexDirection: 'column', mt: 2 }}>
               <ProjectCard />
             </Container>
           </Stack>

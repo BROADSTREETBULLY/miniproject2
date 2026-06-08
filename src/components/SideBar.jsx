@@ -42,7 +42,7 @@ export default function SideBar({ open, onClose }) {
           </ListItemButton>
         </ListItem>
                 <ListItem disablePadding>
-          <ListItemButton onClick={() => handleNav('/library')}>
+          <ListItemButton onClick={() => handleNav('/dashboard/library')}>
             <ListItemText primary="Library" />
           </ListItemButton>
         </ListItem>
