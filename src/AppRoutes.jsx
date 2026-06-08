@@ -8,6 +8,7 @@ import HomePage from "./pages/homePage";
 import Dashboard from "./pages/Dashboard";
 import ProjectsPage from "./pages/ProjectsPage";
 import SpecLibrary from "./pages/SpecLibrary";
+import AboutPage from "./pages/AboutPage";
 
 
 
@@ -16,14 +17,16 @@ function AppRoutes() {
     <Routes>
       
       <Route path="/" element={<HomePage />} />
+      <Route path="/about" element={<AboutPage />} />
       <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/library" element={<SpecLibrary />} />
-      <Route path="/projects-page" element={<ProjectsPage />} />
-      <Route path="/specs" element={<SpecList />} />
-      <Route path="/specs/new" element={<SpecCreate />} />
-      <Route path="/specs/:SpecId" element={<SpecShow />} />
-      <Route path="/specs/:SpecId/edit" element={<SpecEdit />} />
+      <Route path="/dashboard/library" element={<SpecLibrary />} />
+      <Route path="/dashboard/projects-page" element={<ProjectsPage />} />
+      <Route path="/dashboard/specs" element={<SpecList />} />
+      <Route path="/dashboard/specs/new" element={<SpecCreate />} />
+      <Route path="/dashboard/specs/:SpecId" element={<SpecShow />} />
+      <Route path="/dashboard/specs/:SpecId/edit" element={<SpecEdit />} />
       <Route path="*" element={<PageNotFound />} />
+      
       
     </Routes>
   );
