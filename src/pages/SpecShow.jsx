@@ -48,7 +48,7 @@ export default function SpecShow() {
   }, [loadData]);
 
   const handleSpecEdit = React.useCallback(() => {
-    navigate(`/Specs/${SpecId}/edit`);
+    navigate(`/dashboard/specs/${SpecId}/edit`);
   }, [navigate, SpecId]);
 
   const handleSpecDelete = React.useCallback(async () => {
@@ -71,7 +71,7 @@ export default function SpecShow() {
       try {
         await deleteSpec(Number(SpecId));
 
-        navigate("/Specs");
+        navigate("/dashboard/specs");
 
         notifications.show("Spec deleted successfully.", {
           severity: "success",
@@ -91,7 +91,7 @@ export default function SpecShow() {
   }, [Spec, dialogs, SpecId, navigate, notifications]);
 
   const handleBack = React.useCallback(() => {
-    navigate("/Specs");
+    navigate("/dashboard/specs");
   }, [navigate]);
 
   const renderShow = React.useMemo(() => {
@@ -222,7 +222,7 @@ export default function SpecShow() {
   return (
     <PageContainer
       title={pageTitle}
-      breadcrumbs={[{ title: "Specs", path: "/Specs" }, { title: pageTitle }]}
+      breadcrumbs={[{ title: "Specs", path: "/dashboard/specs" }, { title: pageTitle }]}
     >
       <Box sx={{ display: "flex", flex: 1, width: "100%" }}>{renderShow}</Box>
     </PageContainer>

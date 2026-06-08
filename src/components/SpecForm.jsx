@@ -97,7 +97,7 @@ function SpecForm(props) {
   }, [formValues, onReset]);
 
   const handleBack = React.useCallback(() => {
-    navigate(backButtonPath ?? "/Specs");
+    navigate(backButtonPath ?? "specs");
   }, [navigate, backButtonPath]);
 
   return (

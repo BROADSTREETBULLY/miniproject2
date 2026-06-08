@@ -85,7 +85,7 @@ export default function SpecCreate() {
         autoHideDuration: 3000,
       });
 
-      navigate("/specs");
+      navigate("/dashboard/specs");
     } catch (createError) {
       notifications.show(
         `Failed to create Spec. Reason: ${createError.message}`,
@@ -101,7 +101,7 @@ export default function SpecCreate() {
   return (
     <PageContainer
       title="New Spec"
-      breadcrumbs={[{ title: "Specs", path: "/Specs" }, { title: "New" }]}
+      breadcrumbs={[{ title: "specs", path: "/dashboard/specs" }, { title: "New" }]}
     >
       <SpecForm
         formState={formState}
@@ -109,6 +109,7 @@ export default function SpecCreate() {
         onSubmit={handleFormSubmit}
         onReset={handleFormReset}
         submitButtonLabel="Create"
+        backButtonPath="/dashboard/specs"
       />
     </PageContainer>
   );

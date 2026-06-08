@@ -1,16 +1,4 @@
-const SPEC_LIBRARY = [
-  {
-    id: 1,
-    code: "CHXX",
-    desc: "Ergonomic Office Chair",
-    supplier: "Zenith",
-    category: "Chair",
-    revisedOn: null,
-    image: "https://www.cuof.com.au/wp-content/uploads/2025/07/225-Zenith-VOX-5.jpg",
-    comment: "Lead time x many weeks",
-  },
-
-];
+import SPEC_LIBRARY from './specLibrary';
 
 export function getSpecsStore() {
   const stringifiedSpecs = localStorage.getItem("Specs-store");

@@ -79,7 +79,7 @@ function SpecEditForm({ initialValues, onSubmit }) {
         autoHideDuration: 3000,
       });
 
-      navigate('/Specs');
+      navigate('/dashboard/specs');
     } catch (editError) {
       notifications.show(`Failed to edit Spec. Reason: ${editError.message}`, {
         severity: 'error',
@@ -96,7 +96,7 @@ function SpecEditForm({ initialValues, onSubmit }) {
       onSubmit={handleFormSubmit}
       onReset={handleFormReset}
       submitButtonLabel="Save"
-      backButtonPath={`/Specs/${SpecId}`}
+      backButtonPath={`/dashboard/specs/${SpecId}`}
     />
   );
 }
@@ -180,8 +180,8 @@ export default function SpecEdit() {
     <PageContainer
       title={`Edit Spec ${SpecId}`}
       breadcrumbs={[
-        { title: 'Specs', path: '/Specs' },
-        { title: `Spec ${SpecId}`, path: `/Specs/${SpecId}` },
+        { title: 'Specs', path: 'specs' },
+        { title: `Spec ${SpecId}`, path: `specs/${SpecId}` },
         { title: 'Edit' },
       ]}
     >

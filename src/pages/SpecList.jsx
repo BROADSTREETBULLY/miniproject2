@@ -141,18 +141,18 @@ export default function SpecList() {
 
   const handleRowClick = React.useCallback(
     ({ row }) => {
-      navigate(`/Specs/${row.id}`);
+      navigate(`/dashboard/specs/${row.id}`);
     },
     [navigate],
   );
 
   const handleCreateClick = React.useCallback(() => {
-    navigate("/Specs/new");
+    navigate("new");
   }, [navigate]);
 
   const handleRowEdit = React.useCallback(
     (Spec) => () => {
-      navigate(`/Specs/${Spec.id}/edit`);
+      navigate(`${Spec.id}/edit`);
     },
     [navigate],
   );
