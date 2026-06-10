@@ -10,7 +10,7 @@ export function getSpecsStore() {
 export function searchLibrary(query) {
   if (!query) return [];
   return SPEC_LIBRARY.filter((spec) =>
-  spec.code.toLowerCase().includes(query.toLowerCase()) ||
+  spec.spec.toLowerCase().includes(query.toLowerCase()) ||
   spec.desc.toLowerCase().includes(query.toLowerCase()) ||
   spec.supplier.toLowerCase().includes(query.toLowerCase())
 );

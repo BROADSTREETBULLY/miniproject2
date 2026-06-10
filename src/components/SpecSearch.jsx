@@ -97,7 +97,7 @@ export default function SpecSearch({ onAdd }) {
                 {spec.image && (
                   <img
                     src={spec.image}
-                    alt={spec.code}
+                    alt={spec.spec}
                     style={{
                       width: 100,
                       height: 100,
@@ -106,7 +106,7 @@ export default function SpecSearch({ onAdd }) {
                     }}
                   />
                 )}
-                <ListItemText primary={spec.code} secondary={spec.desc} />
+                <ListItemText primary={spec.desc} secondary={spec.spec} />
               </ListItemButton>
             ))}
           </List>
