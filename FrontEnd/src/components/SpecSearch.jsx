@@ -54,10 +54,11 @@ export default function SpecSearch({ onAdd }) {
   const [query, setQuery] = React.useState("");
   const [results, setResults] = React.useState([]);
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const value = e.target.value;
     setQuery(value);
-    setResults(searchLibrary(value));
+    const results = await searchLibrary(value);
+    setResults(results);
   };
 
   const handleSelect = (spec) => {
